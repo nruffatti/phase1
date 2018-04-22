@@ -10,6 +10,8 @@ class Customer {
 	private:
 		string fname, lname, address;
 	public:
+		Customer();
+
 		Customer(string fname, string lname, string address) {
 			this->fname = fname;
 			this->lname = lname;
