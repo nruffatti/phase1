@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     rm_spaces(data, 4);
     rm_spaces(data, 3, 1);
 
-	for(int i = 0; i < (int)sizeof(data); i++) {
+	for(int i = 0; i < 126; i++) {
 		newCustomer = new Customer(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], data[i][5]);
 		customerList.push_back(newCustomer);
 	}
@@ -58,7 +58,8 @@ int main(int argc, char** argv) {
 			cin >> lname;
 
 			cout << "Enter street address: ";
-			cin >> street;
+			cin.ignore();
+			getline(cin, street);
 
 			cout << "Enter city name: ";
 			cin >> city;
