@@ -19,7 +19,7 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-	string data[126][6];
+	string data[125][6];
 	Customer * newCustomer;
 	vector<Customer *> customerList;
 	int choice;
