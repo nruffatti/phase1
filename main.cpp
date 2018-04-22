@@ -19,32 +19,38 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-	vector<Customer *> customerList;
-	Customer * newCustomer;
 	string data[126][6];
+	Customer * newCustomer;
+	vector<Customer *> customerList;
+	int choice;
 
+	// read customer___data.txt and parse the data
     getData(data);
     rm_nonNum(data, 5);
     rm_spaces(data, 4);
     rm_spaces(data, 3, 1);
 
+	// translate the data into Customer objects and push them into the customerList vector
 	for(int i = 0; i < 126; i++) {
 		newCustomer = new Customer(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], data[i][5]);
 		customerList.push_back(newCustomer);
 	}
 
+	// vector is used to store the options that the user can choose
 	vector<string> options;
 	options.push_back("(1) Add a customer");
 
     cout << "What would you like to do?\n";
+	// for loop iterates through the available options that the user can choose
 	for(int i = 0; i < (int)options.size(); i++) {
 		cout << options.at(i) << endl;
 	}
 	cout << "\nEnter an above number to continue: ";
-
-	int choice;
 	cin >> choice;
 
+	/* Switch is used to determine what option the user chooses
+	 * case 1 - user is prompted to add new customer
+	 */
 	switch(choice) {
 		case 1:
 			string fname, lname, street, city, state, zip;
