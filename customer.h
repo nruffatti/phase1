@@ -8,17 +8,24 @@ using namespace std;
 class Customer {
 	public:
 		Customer();
-		Customer(string, string, string);
+		Customer(string, string, string, string, string, string);
 
 		string getFname();
 		string getLname();
-		string getAddress();
+		string getStreet();
+		string getCity();
+		string getState();
+		string getZip();
 
 		void setFname(string);
 		void setLname(string);
-		void setAddress(string);
+		void setStreet(string);
+		void setCity(string);
+		void setState(string);
+		void setZip(string);
+
 	private:
-		string fname, lname, address;
+		string fname, lname, street, city, state, zip;
 };
 
 #endif

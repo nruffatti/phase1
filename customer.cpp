@@ -7,10 +7,13 @@
 
 using namespace std;
 
-Customer::Customer(string fname, string lname, string address) {
+Customer::Customer(string fname, string lname, string street, string city, string state, string zip) {
 	this->fname = fname;
 	this->lname = lname;
-	this->address = address;
+	this->street = street;
+	this->city = city;
+	this->state = state;
+	this->zip = zip;
 }
 
 string Customer::getFname() {
@@ -21,8 +24,20 @@ string Customer::getLname() {
 	return lname;
 }
 
-string Customer::getAddress() {
-	return address;
+string Customer::getStreet() {
+	return street;
+}
+
+string Customer::getCity() {
+	return city;
+}
+
+string Customer::getState() {
+	return state;
+}
+
+string Customer::getZip() {
+	return zip;
 }
 
 void Customer::setFname(string fname) {
@@ -33,6 +48,14 @@ void Customer::setLname(string lname) {
 	this->lname = lname;
 }
 
-void Customer::setAddress(string address) {
-	this->address = address;
+void Customer::setStreet(string street) {
+	this->street = street;
+}
+
+void Customer::setState(string state) {
+	this->state = state;
+}
+
+void Customer::setZip(string zip) {
+	this->zip = zip;
 }
