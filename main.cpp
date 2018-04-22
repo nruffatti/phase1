@@ -1,12 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * File:   main.cpp
- * Author: Nathan R
+ * Author: Nathan R, Brandon Youngquist
  *
  * Created on April 12, 2018, 9:45 AM
  */
@@ -23,18 +17,23 @@
 
 using namespace std;
 
-/*
- *
- */
+
 int main(int argc, char** argv) {
+	string data[125][6];
+
+    getData(data);
+    rm_nonNum(data, 5);
+    rm_spaces(data, 4);
+    rm_spaces(data, 3, 1);
+
 	vector<string> options;
 	options.push_back("(1) Add a customer");
 
     cout << "What would you like to do?\n";
-	for(int i = 0; i < (int)options.size() - 1; i++) {
+	for(int i = 0; i < (int)options.size(); i++) {
 		cout << options.at(i) << endl;
 	}
-	cout << "\n\nEnter an above number to continue: ";
+	cout << "\nEnter an above number to continue: ";
 
 	int choice;
 	cin >> choice;
@@ -45,6 +44,8 @@ int main(int argc, char** argv) {
 			string fname;
 			string lname;
 			string address;
+
+			cout << "\nNew Customer\n============" << endl;
 
 			cout << "Enter first name: ";
 			cin >> fname;
