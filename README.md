@@ -11,6 +11,6 @@ Create a customer class to store customer data in. Prompt users for new customer
 Written by: Brandon Y
 
 ## Part 3b
-Search for customers by last name. If there is only one, show all info. I more than one, numbered list to choose from. Save data to File
+Search for customers by last name. If there is only one, show all info. If more than one, numbered list to choose from. Save data to file.
 
 Written by: Hai L
