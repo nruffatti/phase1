@@ -1,3 +1,0 @@
-/tmp/ccStVM5p.o: In function `main':
-main.cpp:(.text+0x278): undefined reference to `Customer::Customer(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
-collect2: error: ld returned 1 exit status
