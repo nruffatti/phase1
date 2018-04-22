@@ -19,12 +19,19 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-	string data[125][6];
+	vector<Customer *> customerList;
+	Customer * newCustomer;
+	string data[126][6];
 
     getData(data);
     rm_nonNum(data, 5);
     rm_spaces(data, 4);
     rm_spaces(data, 3, 1);
+
+	for(int i = 0; i < (int)sizeof(data); i++) {
+		newCustomer = new Customer(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], data[i][5]);
+		customerList.push_back(newCustomer);
+	}
 
 	vector<string> options;
 	options.push_back("(1) Add a customer");
@@ -38,12 +45,9 @@ int main(int argc, char** argv) {
 	int choice;
 	cin >> choice;
 
-	vector<Customer *> customerList;
 	switch(choice) {
 		case 1:
-			string fname;
-			string lname;
-			string address;
+			string fname, lname, street, city, state, zip;
 
 			cout << "\nNew Customer\n============" << endl;
 
@@ -53,10 +57,19 @@ int main(int argc, char** argv) {
 			cout << "Enter last name: ";
 			cin >> lname;
 
-			cout << "Enter full address (Street, City, State, Zip): ";
-			cin >> address;
+			cout << "Enter street address: ";
+			cin >> street;
 
-			Customer * newCustomer = new Customer(fname, lname, address);
+			cout << "Enter city name: ";
+			cin >> city;
+
+			cout << "Enter state name: ";
+			cin >> state;
+
+			cout << "Enter zipcode: ";
+			cin >> zip;
+
+			newCustomer = new Customer(fname, lname, street, city, state, zip);
 			customerList.push_back(newCustomer);
 	}
 
