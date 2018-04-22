@@ -3,42 +3,36 @@
  *
  * Created on April 22, 2018
  */
-#include <string>
+#include "customer.h"
+
 using namespace std;
 
-class Customer {
-	private:
-		string fname, lname, address;
-	public:
-		Customer();
+Customer::Customer(string fname, string lname, string address) {
+	this->fname = fname;
+	this->lname = lname;
+	this->address = address;
+}
 
-		Customer(string fname, string lname, string address) {
-			this->fname = fname;
-			this->lname = lname;
-			this->address = address;
-		}
+string Customer::getFname() {
+	return fname;
+}
 
-		string getFname() {
-			return fname;
-		}
+string Customer::getLname() {
+	return lname;
+}
 
-		string getLname() {
-			return lname;
-		}
+string Customer::getAddress() {
+	return address;
+}
 
-		string getAddress() {
-			return address;
-		}
+void Customer::setFname(string fname) {
+	this->fname = fname;
+}
 
-		void setFname(string fname) {
-			this->fname = fname;
-		}
+void Customer::setLname(string lname) {
+	this->lname = lname;
+}
 
-		void setLname(string lname) {
-			this->lname = lname;
-		}
-
-		void setAddress(string address) {
-			this->address = address;
-		}
-};
+void Customer::setAddress(string address) {
+	this->address = address;
+}
