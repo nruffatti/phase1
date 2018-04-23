@@ -1,3 +1,8 @@
+/* File: customer.h
+ * Author: Brandon Youngquist
+ *
+ * Created on April 22, 2018
+ */
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 

@@ -19,16 +19,17 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-	string data[125][6];
+	// variables that will be used in multiple places or multiple times
 	Customer * newCustomer;
 	vector<Customer *> customerList;
 	int choice;
 
 	// read customer___data.txt and parse the data
-    getData(data);
-    rm_nonNum(data, 5);
-    rm_spaces(data, 4);
-    rm_spaces(data, 3, 1);
+	string data[125][6];
+	getData(data);
+	rm_nonNum(data, 5);
+	rm_spaces(data, 4);
+	rm_spaces(data, 3, 1);
 
 	// translate the data into Customer objects and push them into the customerList vector
 	for(int i = 0; i < 125; i++) {
@@ -41,7 +42,7 @@ int main(int argc, char** argv) {
 	options.push_back("(1) Add a customer");
 
 
-    cout << "What would you like to do?\n";
+	cout << "What would you like to do?\n";
 	// for loop iterates through the available options that the user can choose
 	for(int i = 0; i < (int)options.size(); i++) {
 		cout << options.at(i) << endl;
@@ -81,5 +82,5 @@ int main(int argc, char** argv) {
 			customerList.push_back(newCustomer);
 	}
 
-    return 0;
+	return 0;
 }
