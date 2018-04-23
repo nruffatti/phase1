@@ -17,7 +17,7 @@
 
 using namespace std;
 
-int getChoice(vector<string> options) {
+int getChoice(vector<string> &options) {
 	int choice;
 
 	cout << "==========================\nWhat would you like to do?\n";
