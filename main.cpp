@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 	// vector is used to store the options that the user can choose
 	vector<string> options;
 	options.push_back("(1) Add a customer");
+	options.push_back("(2) Search for a customer by last name");
 
 
 	cout << "What would you like to do?\n";
@@ -53,10 +54,9 @@ int main(int argc, char** argv) {
 	/* Switch is used to determine what option the user chooses
 	 * case 1 - user is prompted to add new customer
 	 */
+	string fname, lname, street, city, state, zip;
 	switch(choice) {
 		case 1:
-			string fname, lname, street, city, state, zip;
-
 			cout << "\nNew Customer\n============" << endl;
 
 			cout << "Enter first name: ";
@@ -80,6 +80,13 @@ int main(int argc, char** argv) {
 
 			newCustomer = new Customer(fname, lname, street, city, state, zip);
 			customerList.push_back(newCustomer);
+			break;
+
+		case 2:
+			break;
+
+		default:
+			break;
 	}
 
 	return 0;
