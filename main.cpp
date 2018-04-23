@@ -27,11 +27,14 @@ using namespace std;
 int main(int argc, char** argv) {
     string data[125][6];
     getData(data);
-    //printData(data, 3);
+    //printData(data, 2);
     rm_nonNum(data, 5);
     rm_spaces(data, 4);
-    rm_spaces(data, 3, 1);
-    // << "\n\nrm_spaces\n\n";
+    rm_spaces(data, 3);
+    bad_data(data);
+    fix_bad(data);
+    save(data, "fixed_data");
+    //cout << "\n\nrm_spaces\n\n";
     //printData(data, 3);
     return 0;
 }
