@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     rm_spaces(data, 3, 1);
 
 	// translate the data into Customer objects and push them into the customerList vector
-	for(int i = 0; i < 126; i++) {
+	for(int i = 0; i < 125; i++) {
 		newCustomer = new Customer(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], data[i][5]);
 		customerList.push_back(newCustomer);
 	}
