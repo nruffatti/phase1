@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 	vector<string> options;
 	options.push_back("(1) Add a customer");
 
+
     cout << "What would you like to do?\n";
 	// for loop iterates through the available options that the user can choose
 	for(int i = 0; i < (int)options.size(); i++) {
