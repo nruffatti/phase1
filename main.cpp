@@ -66,41 +66,41 @@ int main(int argc, char** argv) {
 		string fname, lname, street, city, state, zip, fullName;
 		switch(choice) {
 			case 1:
-			cout << "\nNew Customer\n============" << endl;
+				cout << "\nNew Customer\n============" << endl;
 
-			cout << "Enter first name: ";
-			cin >> fname;
+				cout << "Enter first name: ";
+				cin >> fname;
 
-			cout << "Enter last name: ";
-			cin >> lname;
+				cout << "Enter last name: ";
+				cin >> lname;
 
-			cout << "Enter street address: ";
-			cin.ignore();
-			getline(cin, street);
+				cout << "Enter street address: ";
+				cin.ignore();
+				getline(cin, street);
 
-			cout << "Enter city name: ";
-			cin >> city;
+				cout << "Enter city name: ";
+				cin >> city;
 
-			cout << "Enter state name: ";
-			cin >> state;
+				cout << "Enter state name: ";
+				cin >> state;
 
-			cout << "Enter zipcode: ";
-			cin >> zip;
+				cout << "Enter zipcode: ";
+				cin >> zip;
 
-			newCustomer = new Customer(fname, lname, street, city, state, zip);
-			customerList.push_back(newCustomer);
+				newCustomer = new Customer(fname, lname, street, city, state, zip);
+				customerList.push_back(newCustomer);
 
-			fullName = newCustomer->getFname() + " " + newCustomer->getLname();
+				fullName = newCustomer->getFname() + " " + newCustomer->getLname();
 
-			cout << "\nNew Customer, " << fullName << " was added to the list.\n\n";
-			break;
+				cout << "\nNew Customer, " << fullName << " was added to the list.\n\n";
+				break;
 
 			case 2:
-			break;
+				break;
 
 			default:
-			cout << "\nPlease enter a valid number.\n\n";
-			break;
+				cout << "\nPlease enter a valid number.\n\n";
+				break;
 		}
 
 		choice = getChoice();
