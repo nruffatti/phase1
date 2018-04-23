@@ -21,6 +21,7 @@ class Customer {
 		string getCity();
 		string getState();
 		string getZip();
+                string getAddress();
 
 		void setFname(string);
 		void setLname(string);
