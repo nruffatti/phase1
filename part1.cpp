@@ -1,15 +1,25 @@
+/*
+ * File:   part1.cpp
+ * Author: Nathan R
+ *
+ * Created on April 12, 2018, 9:45 AM
+ */
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <algorithm>
-#include <regex>
+#include <sstream>
+#include <vector>
 
 #include "part1.h"
 
 using namespace std;
 
-void getData(string data[][6]) {
+//get data from file changing
+//delimiters when necessary
+vector<vector<string>> getData(vector<vector<string>> data) {
     string line;
     ifstream file ("customer___data.txt");
     if(file.is_open())
@@ -17,6 +27,7 @@ void getData(string data[][6]) {
         int i = -1;
         int j = 0;
         char delimiter = '\n';
+        vector<string> row;
         while(getline(file, line, delimiter))
         {
             replace(line.begin(), line.end(), '"', '\0');
@@ -43,60 +54,192 @@ void getData(string data[][6]) {
                 delimiter = '\t';
                 j = 0;
                 i++;
+                data.push_back(row);
+                row.clear();
                 continue;
             }
-            data[i][j] = line;
-            //cout << line;
+            row.push_back(line);
             j++;
         }
         file.close();
     }
+    return data;
 }
-void printData(string data[][6], int j)
+
+//print data for given column
+void printData(vector<vector<string>> data, int j)
 {
-    int size =  125;
     int i = 0;
-    for(i; i < size; i++)
+    for(i; i < data.size(); i++)
     {
         cout << data[i][j] << endl;
     }
 }
-void rm_spaces(string data[][6], int j, int flag)
+
+//remove initial space character for given columns(city, state)
+vector<vector<string>> rm_spaces(vector<vector<string>> data, int j)
 {
-    //remove spaces from city, state, & ZIP code
-    //can also rm alphabetic characters from ZIP code
-    //last name duplicate >> substring/string match?
-    int size =  125;
-    int i = 0;
-    string temp;
-    regex f("^ ");
-    regex g(" ");
-    for(i; i < size; i++)
+    for(int i = 0; i < data.size(); i++)
     {
-        temp = data[i][j]; //temp pointer to data or separate???
-        if(flag == 1)
-        {
-            temp = regex_replace(temp, f, "");
-        } else {
-            temp = regex_replace(temp, g, "");
-        }
-        
-        data[i][j] = temp;
+        data[i][j] = data[i][j].substr(1);
     }
+    return data;
 }
-void rm_nonNum(string data[][6], int j)
+
+//take zipcode substring
+vector<vector<string>> rm_nonNum(vector<vector<string>> data, int j)
 {
-    //remove spaces from city, state, & ZIP code
-    //can also rm alphabetic characters from ZIP code
-    //last name duplicate >> substring/string match?
-    int size =  125;
-    int i = 0;
-    string temp;
-    regex e("[^0-9]");
-    for(i; i < size; i++)
+    for(int i = 0; i < data.size(); i++)
     {
-        temp = data[i][j]; //temp pointer to data or separate???
-        temp = regex_replace(temp, e, "");
-        data[i][j] = temp;
+        data[i][j] = data[i][j].substr(1,5);
     }
+    return data;
+}
+
+//export bad_data
+void bad_data(vector<vector<string>> data)
+{
+    vector<int> bad;
+    string temp;
+    int k = 0;
+    
+    //find empty or partial data
+    for(int j = 0; j < 6; j++)
+    {
+        for(int i = 0; i < data.size(); i++)
+        {
+            temp = data[i][j];
+            if(temp.length() < 5 && j == 5 || temp.length() < 6 && j == 2 || temp.length() < 2)
+            {
+                bad.push_back(i);
+                k++;
+            }
+        }
+    }
+    
+    //find duplicates
+    string firstTemp;
+    int after;
+    for (int z = 0; z < data.size(); z++)
+    {
+        temp = data[z][1];
+        firstTemp = data[z][0];
+        after = z+1;
+        for (int i = after; i < data.size(); i++)
+        {
+            if(temp.compare(data[i][1]) == 0)
+            {
+                if(firstTemp.find(data[i][0]) != string::npos || data[i][0].find(firstTemp) != string::npos)
+                {
+                    bad.push_back(i);
+                    bad.push_back(z);
+                }
+            }
+        }
+    }
+    
+    //export bad data
+    vector<vector<string>> badTemp;
+    vector<string> row;
+    for (int i = 0; i < bad.size(); i++)
+    {
+        for (int j = 0; j < 7; j++)
+        {
+            if(j == 6)
+            {
+                stringstream tt;
+                tt << bad.at(i);
+                row.push_back(tt.str());
+                tt.clear();
+                badTemp.push_back(row);
+                row.clear();
+            } else {
+                row.push_back(data[bad.at(i)][j]);
+            }
+        }
+    }
+    save(badTemp, "badData");
+}
+
+//save 2d array to file
+void save(vector<vector<string>> data, string name)
+{
+    ofstream file;
+    name += ".csv";
+    file.open(name);
+    for(int i = 0; i < data.size(); i++)
+    {
+        for(int j = 0; j < data[0].size(); j++)
+        {
+            file << data[i][j] << ",";
+        }
+        file << endl;
+    }
+    file.close();
+}
+
+//fix bad data
+vector<vector<string>> fix_bad(vector<vector<string>> data)
+{
+    //import fixed data and location
+    string line;
+    int t;
+    vector<int> loc;
+    vector<vector<string>> temp;
+    vector<string> row;
+    ifstream f ("badData.csv");
+    
+    if(f.is_open())
+    {
+        int j = 0;
+        int i = 0;
+        char delimiter = ',';
+        while(getline(f, line, delimiter))
+        {
+            //loc vector is the location
+            if(j == 6)
+            {
+                stringstream ss(line);
+                ss >> t;
+                loc.push_back(t);
+                ss.clear();
+            } else {
+                row.push_back(line);
+            }
+            j++;
+            if(j == 6)
+            {
+                delimiter = '\n';
+            }
+            if(j == 7)
+            {
+                temp.push_back(row);
+                row.clear();
+                j = 0;
+                i++;
+                delimiter = ',';
+            }
+        }
+        f.close();
+    }
+    
+    //replace bad with good data
+    int count = 0;
+    for (int i = 0; i < loc.size(); i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            //delete if prompted
+            if(temp[i][j].compare("delete") == 0)
+            {
+                data.erase(data.begin() + loc.at(i) + count);
+                count--;
+                break;
+            } else {
+                data[loc.at(i)][j] = temp[i][j];
+            }
+        }
+    }
+    return data;
+    
 }

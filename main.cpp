@@ -28,24 +28,49 @@ int main(int argc, char** argv) {
     bool exit = false;
 
     // read customer___data.txt and parse the data
-    string data[125][6];
-    getData(data);
-    rm_nonNum(data, 5);
-    rm_spaces(data, 4);
-    rm_spaces(data, 3, 1);
+    vector<vector < string>> data;
+
+    string s;
+    cout << "Parse Data? (y/n)" << endl;
+    cin >> s;
+    
+    //user edits bad data
+    if (s.compare("y") == 0) {
+        data = getData(data);
+        data = rm_spaces(data, 4);
+        data = rm_spaces(data, 3);
+        data = rm_nonNum(data, 5);
+        cout << "Parsing through data..." << endl;
+        bad_data(data);
+        cout << "Possible bad data saved to badData.csv file" << endl;
+        cout << "Fix the bad data now and resave data. Press any key, then enter to continue" << endl;
+        cout << ("note: type 'delete' into an element to delete that entire row.") << endl;
+        cin >> s;
+        data = fix_bad(data);
+        save(data, "fixed_data");
+    } else { //uses last saved edited badData file
+        data = getData(data);
+        data = rm_spaces(data, 4);
+        data = rm_spaces(data, 3);
+        data = rm_nonNum(data, 5);
+        data = fix_bad(data);
+        save(data, "fixed_data");
+    }
+    cout << "\n\n\n\n\n";
 
     // translate the data into Customer objects and push them into the customerList vector
-   for (int i = 0; i < 125; i++) {
+    for (int i = 0; i < data.size(); i++) {
         newCustomer = new Customer(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], data[i][5]);
         customerList.push_back(newCustomer);
     }
-    
+
     size = customerList.size(); // to keep the track of # of existing records
     // vector is used to store the options that the user can choose
     vector<string> options;
     options.push_back("(1) Add a customer");
     options.push_back("(2) Search for a customer by last name");
     options.push_back("(3) Exit");
+
 
 
     cout << "What would you like to do?\n";
@@ -98,22 +123,24 @@ int main(int argc, char** argv) {
                 cout << "\nEnter last name to search: ";
                 cin >> lname;
                 foundList = searchLastName(customerList, lname);
+
+                //multiple last names
                 if (foundList.size() > 1) {
-                    for (int i = 0; i < foundList.size(); i++)
-                        cout << (i + 1) << ". " << customerList[foundList[i]]->getFname()
-                        << " " << customerList[foundList[i]]->getLname() << endl;
+                    for (int i = 0; i < foundList.size(); i++) {
+                        cout << (i + 1) << ". " << customerList[foundList[i]]->getFname() << " " << customerList[foundList[i]]->getLname() << endl;
+                    }
                     cout << "Enter a number to choose a record: " << endl;
                     cin >> choice;
                     choice--;
                     cout << "\n" << customerList[foundList[choice]]->getFname() << " "
                             << customerList[foundList[choice]]->getLname() << ", "
                             << customerList[foundList[choice]]->getAddress() << endl;
-                } else if (foundList.size() == 1) {
+                }//one last name found
+                else if (foundList.size() == 1) {
                     cout << "\n" << customerList[foundList[0]]->getFname() << " "
-                    << customerList[foundList[0]]->getLname() << ", "
-                    << customerList[foundList[0]]->getAddress() << endl;
-                }
-                else 
+                            << customerList[foundList[0]]->getLname() << ", "
+                            << customerList[foundList[0]]->getAddress() << endl;
+                } else
                     cout << "No match was found. Try again!" << endl;
                 break;
             case 3:
@@ -121,6 +148,11 @@ int main(int argc, char** argv) {
                 exit = true;
                 break;
             default:
+                cout << "Not valid input. Try again!" << endl;
+                
+                //fix infinite loop error for invalid inputs
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 break;
         }
     }

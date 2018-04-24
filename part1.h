@@ -10,9 +10,13 @@
 
 using namespace std;
 
-extern void getData(string data[][6]);
-extern void printData(string data[][6], int j);
-extern void rm_spaces(string data[][6], int j, int flag = 0);
-extern void rm_nonNum(string data[][6], int j);
+extern vector<vector<string>> getData(vector<vector<string>> data);
+extern void printData(vector<vector<string>> data, int j);
+extern vector<vector<string>> rm_spaces(vector<vector<string>> data, int j);
+extern vector<vector<string>> rm_nonNum(vector<vector<string>> data, int j);
+extern void bad_data(vector<vector<string>> data);
+extern void save(vector<vector<string>> data, string name);
+extern vector<vector<string>> fix_bad(vector<vector<string>> data);
 
 #endif /* PART1_H */
+
