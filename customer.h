@@ -1,5 +1,5 @@
 /* File: customer.h
- * Author: Brandon Youngquist
+ * Author: Brandon Youngquist, Hai Le
  *
  * Created on April 22, 2018
  */
@@ -14,14 +14,14 @@ class Customer {
 	public:
 		Customer();
 		Customer(string, string, string, string, string, string);
-
+  
 		string getFname();
 		string getLname();
 		string getStreet();
 		string getCity();
 		string getState();
 		string getZip();
-                string getAddress();
+    string getAddress();
 
 		void setFname(string);
 		void setLname(string);
@@ -34,4 +34,4 @@ class Customer {
 		string fname, lname, street, city, state, zip;
 };
 
-#endif
+#endif /* CUSTOMER_H */

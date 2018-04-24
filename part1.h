@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   part1.h
  * Author: Nathan R
@@ -22,4 +16,3 @@ extern void rm_spaces(string data[][6], int j, int flag = 0);
 extern void rm_nonNum(string data[][6], int j);
 
 #endif /* PART1_H */
-

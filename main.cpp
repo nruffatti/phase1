@@ -1,6 +1,6 @@
 /*
  * File:   main.cpp
- * Author: Nathan R, Brandon Youngquist
+ * Author: Nathan R, Brandon Youngquist, Hai Le
  *
  * Created on April 12, 2018, 9:45 AM
  */
