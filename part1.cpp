@@ -4,10 +4,14 @@
 #include <string>
 #include <string.h>
 #include <algorithm>
+#include <sstream>
+#include <vector>
 
 #include "part1.h"
 
 using namespace std;
+
+const int SIZE = 125;
 
 //get data from file changing
 //delimiters when necessary
@@ -57,29 +61,26 @@ void getData(string data[][6]) {
 //print data for given column
 void printData(string data[][6], int j)
 {
-    int size =  125;
     int i = 0;
-    for(i; i < size; i++)
+    for(i; i < SIZE; i++)
     {
         cout << data[i][j] << endl;
     }
 }
+
+//remove initial space character for given columns(city, state)
 void rm_spaces(string data[][6], int j)
 {
-    //remove unneeded spaces from city, state
-    int size =  125;
-    int i = 0;
-    for(i; i < size; i++)
+    for(int i = 0; i < SIZE; i++)
     {
         data[i][j] = data[i][j].substr(1);
     }
 }
+
+//take zipcode substring
 void rm_nonNum(string data[][6], int j)
 {
-    //remove non-numbers from ZIP code
-    int size =  125;
-    int i = 0;
-    for(i; i < size; i++)
+    for(int i = 0; i < SIZE; i++)
     {
         data[i][j] = data[i][j].substr(1,5);
     }
@@ -88,21 +89,20 @@ void rm_nonNum(string data[][6], int j)
 //export bad_data
 void bad_data(string data[][6])
 {
-    int size = 125;
-    int bad[7];
+    vector<int> bad;
     string temp;
-    string badTemp[125][6];
+    string badTemp[125][7];
     int k = 0;
     
     //find empty or partial data
     for(int j = 0; j < 6; j++)
     {
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i < SIZE; i++)
         {
             temp = data[i][j];
             if(temp.length() < 5 && j == 5 || temp.length() < 6 && j == 2 || temp.length() < 2)
             {
-                bad[k] = i;
+                bad.push_back(i);
                 k++;
             }
         }
@@ -111,48 +111,54 @@ void bad_data(string data[][6])
     //duplicates
     string firstTemp;
     int after;
-    for (int z = 0; z < size; z++)
+    for (int z = 0; z < SIZE; z++)
     {
         temp = data[z][1];
         firstTemp = data[z][0];
         after = z+1;
-        for (int i = after; i < size; i++)
+        for (int i = after; i < SIZE; i++)
         {
             if(temp.compare(data[i][1]) == 0)
             {
                 if(firstTemp.find(data[i][0]) != string::npos || data[i][0].find(firstTemp) != string::npos)
                 {
-                    bad[k] = i;
-                    k++;
-                    bad[k] = z;
-                    k++;
+                    bad.push_back(i);
+                    bad.push_back(z);
                 }
             }
         }
     }
     
     //export bad data
-    for (int i = 0; i < 7; i++)
+    string conv;
+    for (int i = 0; i < bad.size(); i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < 7; j++)
         {
-            badTemp[i][j] = data[bad[i]][j];
+            if(j == 6)
+            {
+                stringstream tt;
+                tt << bad.at(i);
+                badTemp[i][j] = tt.str();
+                tt.clear();
+            } else {
+                badTemp[i][j] = data[bad.at(i)][j];
+            }
         }
     }
-    save(badTemp, "badData");
-    save(bad, "badDataPos");
+    //save(badTemp, "badData");
+    //save(bad, "badDataPos");
     
 }
 
 //save 2d array to file
 void save(string data[][6], string name)
 {
-    int size = 125;
     ofstream file;
     name += ".csv";
     file.open(name);
     
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < SIZE; i++)
     {
         for(int j = 0; j < 6; j++)
         {
@@ -164,16 +170,33 @@ void save(string data[][6], string name)
 }
 
 //overloaded
-void save(int data[], string name)
+void save(string data[][7], string name)
 {
-    int size = 7;
     ofstream file;
     name += ".csv";
     file.open(name);
     
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < SIZE; i++)
     {
-        file << data[i] << ",";
+        for(int j = 0; j < 7; j++)
+        {
+            file << data[i][j] << ",";
+        }
+        file << endl;
+    }
+    file.close();
+}
+
+//overloaded
+void save(vector<int> data, string name)
+{
+    ofstream file;
+    name += ".csv";
+    file.open(name);
+    
+    for(int i = 0; i < data.size(); i++)
+    {
+        file << data.at(i) << ",";
     }
     file.close();
 }
@@ -181,25 +204,13 @@ void save(int data[], string name)
 //fix bad data
 void fix_bad(string data[][6])
 {
-    //import location
+    //import fixed data and location
     string line;
-    ifstream file ("badDataPos.csv");
-    int bad[7];
-    if(file.is_open())
-    {
-        int j = 0;
-        char delimiter = ',';
-        while(getline(file, line, delimiter))
-        {
-            bad[j] = stoi(line);
-            j++;
-        }
-        file.close();
-    }
-    
-    //import fixed data
-    string temp[7][6];
-    ifstream f ("fixedBadData.csv");
+    int t;
+    vector<int> bad;
+    vector<vector<string>> temp;
+    vector<string> row;
+    ifstream f ("badData.csv");
     if(f.is_open())
     {
         int j = 0;
@@ -207,14 +218,25 @@ void fix_bad(string data[][6])
         char delimiter = ',';
         while(getline(f, line, delimiter))
         {
-            temp[i][j] = line;
+            if(j == 6)
+            {
+                stringstream ss(line);
+                ss >> t;
+                cout << t << endl;
+                bad.push_back(t);
+                ss.clear();
+            } else {
+                row.push_back(line);
+            }
             j++;
-            if(j == 5)
+            if(j == 6)
             {
                 delimiter = '\n';
             }
-            if(j == 6)
+            if(j == 7)
             {
+                temp.push_back(row);
+                row.clear();
                 j = 0;
                 i++;
                 delimiter = ',';
@@ -228,7 +250,7 @@ void fix_bad(string data[][6])
     {
         for (int j = 0; j < 6; j++)
         {
-            data[bad[i]][j] = temp[i][j];
+            data[bad.at(i)][j] = temp[i][j];
         }
     }
 }

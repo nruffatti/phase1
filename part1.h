@@ -22,7 +22,8 @@ extern void rm_spaces(string data[][6], int j);
 extern void rm_nonNum(string data[][6], int j);
 extern void bad_data(string data[][6]);
 extern void save(string data[][6], string name);
-extern void save(int data[], string name);
+extern void save(string data[][7], string name);
+extern void save(vector<int> data, string name);
 extern void fix_bad(string data[][6]);
 
 #endif /* PART1_H */

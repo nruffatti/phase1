@@ -16,7 +16,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-
+#include <vector>
 #include "part1.h"
 
 using namespace std;
@@ -27,14 +27,12 @@ using namespace std;
 int main(int argc, char** argv) {
     string data[125][6];
     getData(data);
-    //printData(data, 2);
-    rm_nonNum(data, 5);
     rm_spaces(data, 4);
     rm_spaces(data, 3);
+    rm_nonNum(data, 5);
     bad_data(data);
     fix_bad(data);
     save(data, "fixed_data");
-    //cout << "\n\nrm_spaces\n\n";
-    //printData(data, 3);
+
     return 0;
 }
