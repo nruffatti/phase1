@@ -25,13 +25,13 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    string data[125][6];
-    getData(data);
-    rm_spaces(data, 4);
-    rm_spaces(data, 3);
-    rm_nonNum(data, 5);
+    vector<vector<string>> data;
+    data = getData(data);
+    data = rm_spaces(data, 4);
+    data = rm_spaces(data, 3);
+    data = rm_nonNum(data, 5);
     bad_data(data);
-    fix_bad(data);
+    data = fix_bad(data);
     save(data, "fixed_data");
 
     return 0;
