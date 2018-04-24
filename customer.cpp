@@ -1,5 +1,5 @@
 /* File: customer.cpp
- * Author: Brandon Youngquist
+ * Author: Brandon Youngquist, Hai Le
  *
  * Created on April 22, 2018
  */
@@ -40,6 +40,11 @@ string Customer::getZip() {
     return zip;
 }
 
+
+string Customer::getAddress() {
+    return street + ", " + city + ", " + state + ", " + zip;
+}
+
 void Customer::setFname(string fname) {
     this->fname = fname;
 }
@@ -59,5 +64,3 @@ void Customer::setState(string state) {
 void Customer::setZip(string zip) {
     this->zip = zip;
 }
-
-
